@@ -1,0 +1,61 @@
+# Build folders
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+artifacts/
+publish/
+out/
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# .NET user-specific
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+logs/
+
+# Local app settings / secrets-like local files
+appsettings.Local.json
+appsettings.Development.Local.json
+.env
+.env.*
+
+# Test results / coverage
+[Tt]est[Rr]esult*/
+TestResults/
+coverage/
+coverage.xml
+*.coverage
+*.coveragexml
+[Bb]enchmarkDotNet.Artifacts/
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+!packages/build/
+
+# SQLite / local db
+*.db
+*.sqlite
+*.sqlite3
+
+# Generated
+Generated/
+*.generated.cs
+
+# Frontend
+node_modules/
+wwwroot/lib/
+
+# OS files
+.DS_Store
+Thumbs.db
