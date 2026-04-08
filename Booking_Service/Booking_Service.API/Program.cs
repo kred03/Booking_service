@@ -42,9 +42,19 @@ record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 
 class Printer
 {
-    public void Print(WeatherForecast forecast)
+    public virtual void Print(WeatherForecast forecast)
     {
         Console.WriteLine(forecast.TemperatureC);
         Console.WriteLine(forecast.Summary);
+    }
+}
+
+class Editor : Printer
+{
+    public override void Print(WeatherForecast forecast)
+    {
+        Console.WriteLine(forecast.TemperatureC);
+        Console.WriteLine(forecast.Summary);
+        Console.WriteLine("Hello World!");
     }
 }
