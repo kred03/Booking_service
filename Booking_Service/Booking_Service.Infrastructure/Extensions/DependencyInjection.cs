@@ -1,4 +1,6 @@
-﻿using Booking_Service.Infrastructure.Persistence;
+﻿using Booking_Service.Application.Interfaces;
+using Booking_Service.Infrastructure.Persistence;
+using Booking_Service.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +17,8 @@ public static class DependencyInjection
 
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseNpgsql(connectionString));
+
+        services.AddScoped<IRoomService, RoomService>();
 
         return services;
     }

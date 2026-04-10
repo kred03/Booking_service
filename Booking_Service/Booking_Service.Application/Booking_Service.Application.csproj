@@ -10,8 +10,4 @@
       <ProjectReference Include="..\Booking_Service.Domain\Booking_Service.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Interfaces\" />
-    </ItemGroup>
-
 </Project>
