@@ -19,6 +19,7 @@ public static class DependencyInjection
             options.UseNpgsql(connectionString));
 
         services.AddScoped<IRoomService, RoomService>();
+        services.AddScoped<IUserService, UserService>();
 
         return services;
     }
