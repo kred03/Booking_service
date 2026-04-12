@@ -1,3 +1,4 @@
+using Booking_Service.Application.Extensions;
 using Booking_Service.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,7 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddProblemDetails();
 
 var app = builder.Build();
 
@@ -14,6 +18,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionHandler();
+app.UseStatusCodePages();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();

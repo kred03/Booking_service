@@ -1,5 +1,7 @@
-﻿using Booking_Service.Application.DTOs.Bookings;
+﻿using Booking_Service.API.Common;
+using Booking_Service.Application.DTOs.Bookings;
 using Booking_Service.Application.Interfaces;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Booking_Service.API.Controllers;
@@ -9,10 +11,17 @@ namespace Booking_Service.API.Controllers;
 public class BookingsController : ControllerBase
 {
     private readonly IBookingService _bookingService;
+    private readonly IValidator<CreateBookingRequest> _createValidator;
+    private readonly IValidator<UpdateBookingRequest> _updateValidator;
 
-    public BookingsController(IBookingService bookingService)
+    public BookingsController(
+        IBookingService bookingService,
+        IValidator<CreateBookingRequest> createValidator,
+        IValidator<UpdateBookingRequest> updateValidator)
     {
         _bookingService = bookingService;
+        _createValidator = createValidator;
+        _updateValidator = updateValidator;
     }
 
     [HttpGet]
@@ -36,7 +45,10 @@ public class BookingsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateBookingRequest request, CancellationToken cancellationToken)
     {
-        var result = await _bookingService.CreateAsync(request, cancellationToken);
+        var validationResult = await _createValidator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            return BadRequest(new ValidationProblemDetails(validationResult.ToDictionary()));        var result = await _bookingService.CreateAsync(request, cancellationToken);
 
         if (!result.IsSuccess)
             return BadRequest(new { message = result.Error });
@@ -47,6 +59,10 @@ public class BookingsController : ControllerBase
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateBookingRequest request, CancellationToken cancellationToken)
     {
+        var validationResult = await _updateValidator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            return BadRequest(new ValidationProblemDetails(validationResult.ToDictionary()));
         var result = await _bookingService.UpdateAsync(id, request, cancellationToken);
 
         if (!result.IsSuccess)
